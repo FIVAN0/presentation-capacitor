@@ -1,6 +1,6 @@
 {
-  "name": "presentation-capacitor",
-  "version": "0.0.3",
+  "name": "presentation-capacitor-fivano",
+  "version": "0.0.4",
   "description": "Capacitor Plugin for presentation api",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
@@ -15,21 +15,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/TheeMachine/presentation-capacitor"
+    "url": "https://github.com/FIVAN0/presentation-capacitor"
   },
-  "readme": "https://github.com/TheeMachine/presentation-capacitor#readme",
-  "bugs": {
-    "url": "https://github.com/TheeMachine/presentation-capacitor/issues"
-  },
-  "keywords": [
-    "capacitor",
-    "plugin",
-    "native",
-    "presentation",
-    "presentation api",
-    "presentation api android",
-    "second screen presentation"
-  ],
+  "readme": "https://github.com/FIVAN0/presentation-capacitor#readme",
   "scripts": {
     "verify": "npm run verify:android && npm run verify:web",
     "verify:android": "cd android && ./gradlew clean build test && cd ..",

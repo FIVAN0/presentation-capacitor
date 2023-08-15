@@ -13,6 +13,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.webkit.WebChromeClient;
 
 import com.getcapacitor.Plugin;
 
@@ -35,6 +36,7 @@ public class SecondaryDisplay extends Presentation {
         setContentView(R.layout.activity_secondary_display);
 
         WebView webView = findViewById(R.id.secondary_webview);
+        webView.setWebChromeClient(new WebChromeClient());
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
@@ -45,13 +47,13 @@ public class SecondaryDisplay extends Presentation {
         webSettings.setAllowFileAccess(true);
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         String path = url;
-        /*
-        if(!url.startsWith("https://")) {
-            path = Uri.parse("file:///android_asset/public/index.html?route=" + url).toString();
+
+        if(!url.startsWith("https://") && !url.startsWith("http://")) {
+            path = Uri.parse("file:///android_asset/public/" + url).toString();
         } else {
             path = url;
         }
-         */
+
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String _url) {
@@ -67,7 +69,7 @@ public class SecondaryDisplay extends Presentation {
                 }
             }
         });
-        webView.loadDataWithBaseURL(null, path, "text/html", "UTF-8", null);
+        webView.loadUrl(path);
     }
 
     public void loadUrl(String url) {
