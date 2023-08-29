@@ -27,14 +27,6 @@ public class SecondaryDisplay extends Presentation {
         super(outerContext, display);
     }
 
-    public boolean onRenderProcessGone(WebView view, RenderProcessGoneDetail detail) {
-        return true;
-    }
-
-    public boolean onRenderProcessGone(WebView webView, RenderProcessGoneDetail detail) {
-        return true;
-    }
-
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
