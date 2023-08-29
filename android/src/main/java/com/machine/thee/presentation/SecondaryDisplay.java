@@ -8,15 +8,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.webkit.WebChromeClient;
-
 import com.getcapacitor.Plugin;
-
 import java.util.function.Function;
 
 public class SecondaryDisplay extends Presentation {
@@ -27,6 +25,14 @@ public class SecondaryDisplay extends Presentation {
 
     public SecondaryDisplay(Context outerContext, Display display) {
         super(outerContext, display);
+    }
+
+    public boolean onRenderProcessGone(WebView view, RenderProcessGoneDetail detail) {
+        return true;
+    }
+
+    public boolean onRenderProcessGone(WebView webView, RenderProcessGoneDetail detail) {
+        return true;
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -48,32 +54,33 @@ public class SecondaryDisplay extends Presentation {
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         String path = url;
 
-        if(!url.startsWith("https://") && !url.startsWith("http://")) {
+        if (!url.startsWith("https://") && !url.startsWith("http://")) {
             path = Uri.parse("file:///android_asset/public/" + url).toString();
         } else {
             path = url;
         }
 
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String _url) {
-                capPlugin.notifyToSuccess(webView, _url);
-            }
+        webView.setWebViewClient(
+            new WebViewClient() {
+                @Override
+                public void onPageFinished(WebView view, String _url) {
+                    capPlugin.notifyToSuccess(webView, _url);
+                }
 
-            @Override
-            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    capPlugin.notifyToFail(webView, error.getErrorCode());
-                } else {
-                    capPlugin.notifyToFail(webView, 400);
+                @Override
+                public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        capPlugin.notifyToFail(webView, error.getErrorCode());
+                    } else {
+                        capPlugin.notifyToFail(webView, 400);
+                    }
                 }
             }
-        });
+        );
         webView.loadUrl(path);
     }
 
     public void loadUrl(String url) {
-       this.url = url;
-
+        this.url = url;
     }
 }
